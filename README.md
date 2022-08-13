@@ -1,6 +1,6 @@
-# React-REST
+# React-APIs
 
-You can also access REST services from React.  This example will show you how easy it is to mix fetch calls with React to display the data.  In this tutorial, we will show you how to access the Utah cities REST service from your React application.
+You can also access API services from React.  This example will show you how easy it is to mix fetch calls with React to display the data.  In this tutorial, we will show you how to access the Utah cities API service from your React application.
 
 1. First create your index.html file with a form where the user can type in the first letters of a city:
 ```
