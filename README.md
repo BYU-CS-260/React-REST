@@ -35,6 +35,7 @@ You can also access REST services from React.  This example will show you how ea
     
       render() {
         return (
+            <div>
             <form onSubmit={this.handleSubmit} onKeyUp={this.handleChange}>
             <label>
               Name:
@@ -42,8 +43,9 @@ You can also access REST services from React.  This example will show you how ea
             </label>
             <input type="submit" value="Submit" />
             </form>
+            </div>
         );
-        }
+      }
     }
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<CityForm />);
@@ -51,45 +53,35 @@ You can also access REST services from React.  This example will show you how ea
   </body>
 </html>
 ```
-Notice that we are going to capture the keyup event and will call 'handleChange' when this occurs.  The state variable 'value' will contain the characters that have been typed into the box.  
+Notice that we are going to capture the keyup event and will call 'handleChange' when this occurs.  The state variable 'value' will contain the characters that have been typed into the box. We have inserted an extra ```<div>``` around the form so we can add a list in the next step.  Test your code to make sure that you see the alert box every time you type a character in the form.
 
-2. Now add an array of cities to your state and add code to create an unordered list of cities once you have fetched them. 
+2. Now add an array of cities to your state.  We are trying to mimic the API here by creating an array of objects that is similar to the JSON array that the API will return.
 
 ```
-var app = new Vue({
-  el: '#app',
-  data: {
-    cities: [],
-    prefix: '',
-  },
-});
+        this.state = {value: '', cities:[{"city":"Provo"},{"city":"Lindon"}]};
 ```
-Notice that we define the 'cities' array and the 'prefix' model variable.
-
-3. Add the 'fetchREST' function and make sure that it is called with the correct 'prefix'.
+3. And add code at the top of render to create the list.
 ```
-  methods: {
-    fetchREST() {
-      console.log("In Fetch " + this.prefix);
-    },
-  },
+        const listItems = this.state.cities.map((cityname) => 
+          <li key={cityname.city}>{cityname.city}</li>
+        );
 ```
-4. Now add the code to fetch the cities that start with 'prefix' from the REST service. Once the data has been returned, the 'then' promise calls the 'json()' promise to convert the json to a javascript array.  Since this is an asynchronous call, we add another then when the conversion completes.  At this point, the 'cities' array is truncated and the cities from the REST service are pushed onto the 'cities' array.  They will then automatically be displayed with the mustache syntax in the html file.
+4. Then add code to display the list below the form.  Test your code to make sure that the list of cities is displayed below the form.
 ```
-      var url = "http://bioresearch.byu.edu/cs260/jquery/getcity.cgi?q=" + this.prefix;
-      console.log("URL " + url);
-      fetch(url)
-        .then((data) => {
-          return (data.json());
-        })
-        .then((citylist) => {
-          console.log("CityList");
-          console.log(citylist);
-          this.cities = [];
-          for (let i = 0; i < citylist.length; i++) {
-            console.log(citylist[i].city);
-            this.cities.push({ name: citylist[i].city });
-          };
-          console.log("Got Citylist");
-        });
+            <ul>{listItems}</ul>
+```
+4. Now add the code to fetch the cities that start with 'prefix' from the REST service. Once the data has been returned, the 'then' promise calls the 'json()' promise to convert the json to a javascript array.  Since this is an asynchronous call, we add another 'then' when the conversion completes.  At this point, the 'cities' array is truncated and the cities from the REST service are pushed onto the 'cities' array.  They will then be displayed with the mustache syntax in the render.
+```
+        var url = "http://bioresearch.byu.edu/cs260/jquery/getcity.cgi?q=" + event.target.value;
+        console.log("URL " + url);
+        fetch(url)
+          .then((data) => {
+            return (data.json());
+          })
+          .then((citylist) => {
+            console.log("CityList");
+            console.log(citylist);
+            this.setState({cities:citylist})
+            console.log(this.state.cities);
+          });
 ```
