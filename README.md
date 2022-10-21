@@ -3,7 +3,7 @@
 You can also access API services from React.  This example will show you how easy it is to mix fetch calls with React to display the data.  In this tutorial, we will show you how to access the Utah cities API service from your React application.
 
 1. First create your index.html file with a form where the user can type in the first letters of a city:
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -57,21 +57,21 @@ Notice that we are going to capture the keyup event and will call 'handleChange'
 
 2. Now add an array of cities to your state.  We are trying to mimic the API here by creating an array of objects that is similar to the JSON array that the API will return.
 
-```
+```jsx
         this.state = {value: '', cities:[{"city":"Provo"},{"city":"Lindon"}]};
 ```
 3. And add code at the top of render to create the list.
-```
+```jsx
         const listItems = this.state.cities.map((cityname) => 
           <li key={cityname.city}>{cityname.city}</li>
         );
 ```
 4. Then add code to display the list below the form.  Test your code to make sure that the list of cities is displayed below the form.
-```
+```jsx
             <ul>{listItems}</ul>
 ```
 4. Now add the code to fetch the cities that start with 'prefix' from the REST service. Once the data has been returned, the 'then' promise calls the 'json()' promise to convert the json to a javascript array.  Since this is an asynchronous call, we add another 'then' when the conversion completes.  At this point, the 'cities' array is truncated and the cities from the REST service are pushed onto the 'cities' array.  They will then be displayed with the mustache syntax in the render.
-```
+```jsx
         var url = "https://csonline.byu.edu/city?q=" + event.target.value;
         console.log("URL " + url);
         fetch(url)
