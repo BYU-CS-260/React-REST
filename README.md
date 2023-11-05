@@ -72,7 +72,7 @@ Notice that we are going to capture the keyup event and will call 'handleChange'
 ```
 4. Now add the code to fetch the cities that start with 'prefix' from the REST service. Once the data has been returned, the 'then' promise calls the 'json()' promise to convert the json to a javascript array.  Since this is an asynchronous call, we add another 'then' when the conversion completes.  At this point, the 'cities' array is truncated and the cities from the REST service are pushed onto the 'cities' array.  They will then be displayed with the mustache syntax in the render.
 ```jsx
-        var url = "https://csonline.byu.edu/city?q=" + event.target.value;
+        var url = "csonline.fhtl.org?q=" + event.target.value;
         console.log("URL " + url);
         fetch(url)
           .then((data) => {
