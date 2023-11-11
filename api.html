@@ -20,7 +20,7 @@
       handleChange(event) {
         alert('A name was changed: ' + event.target.value);
         this.setState({value: event.target.value});
-        var url = "https://csonline.byu.edu/city?q=" + event.target.value;
+        var url = "https://csonline.fhtl.org?q=" + event.target.value;
         console.log("URL " + url);
         fetch(url)
           .then((data) => {
